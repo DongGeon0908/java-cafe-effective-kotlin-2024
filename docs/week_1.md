@@ -15,7 +15,7 @@
   - **read-write-property**
 - 코틀린은 프로퍼티나 객체에 아래와 같이 상태를 가질 수 있다
 
-```
+```kotlin
 var a = 10
 var list: MutableList<Int> = mutableListOf()
 ```
@@ -122,7 +122,7 @@ suspend fun main() {
 - 즉 프로퍼티가 상태에서 멀티 스레드를 활용하게 된다면 충돌이 되지 않도록 적절하게 동기화를 구현해야함
   - 그러나 동기화를 잘 구현하는 것은 굉장히 어려운 일
 
-```
+```kotlin
 private fun locking() {
     val lock = Any()
     var num = 0
@@ -165,21 +165,21 @@ private fun locking() {
 
 - 읽기 전용 프로퍼티를 활용해 마치 값처럼 동작하며 일반적인 방법으로는 변하지 않음
 
-```
+```kotlin
 val a = 10
 a = 20 // 오류
 ```
 
 - 읽기 전용 프로퍼티가 mutable한 객체를 담고 있다면, 내부적으로 변할 수 있음
 
-```
+```kotlin
 val list = mutableListOf(1,2,3)
 list.add(4)
 ```
 
 - 읽기 전용 프로퍼티는 다른 프로퍼티를 활용하는 사용자 정의 게터로도 정의할 수 있습니다. 이렇게 var프로퍼티를 사용하는 val 프로퍼티는 var프로퍼티가 변할 때 변할 수 있습니다.
 
-```
+```kotlin
 var name: String = "Marcin"
 var surname: String = "Mkskala"
 val fullName 
@@ -190,7 +190,7 @@ val fullName
   - 이러한 특성으로 코틀린은 API를 변경하거나 정의할 때 유연성을 가짐
 - var는 게터와 세터를 모두 제공하지만 val은 게터만 제공하므로 val을 var로 오버라이드 할 수 있음
 
-```
+```kotlin
 interface Element {
     var active: Boolean
 }
@@ -205,7 +205,7 @@ class ActualElement: Element {
   - 게터 또는 델리게이트로 정의 가능 (delegate : 특정 기능을 다른 객체에 위임)
 - val은 정의 옆에 상태가 바로 적히므로, 코드의 실행을 예측하는 것이 훨씬 간단하고 스마트 캐스트(smart cast)등의 추가적 인 기능을 활용할 수 있음
 
-```
+```kotlin
 val name: String? = "Marton"
 val surname: String = "Braun"
 
@@ -242,7 +242,7 @@ fun main() {
 
 **Iterable map**
 
-```
+```kotlin
 inline fun<T, R> Iterable<T>.map(
     transformation: (T) -> R
 ): List<R> {
@@ -261,7 +261,7 @@ inline fun<T, R> Iterable<T>.map(
 
 **다운캐스팅 문제**
 
-```
+```kotlin
 val list = listOf(1, 2, 3)
 
 if (list is MutableList) {
@@ -293,7 +293,7 @@ mutableList.add(4)
   - set, map 키로 사용할 수 있는데 mutable 객체는 이러한 것으로 사용할 수 없다.
     - 세트와 맵인 내부적으로 해시 테이블을 사용하고 해시 테이블은 처음 요소를 넣을때 요소의 값을 기반으로 버킷을 결정하기 때문에 요소의 값이 수정이 되면 해시 테이블 내부에서 요소를 찾을 수 없게되기 때문
 
-  ```
+  ```kotlin
   val names: SortedSet<FullName> = TreeSet()
   val person = FullName("AAA", "AAA")
   names.add(person)
@@ -309,7 +309,7 @@ mutableList.add(4)
 
 - immutable 객체는 위와 같은 장점을 가지고 있으나 객체를 변경할 수 없다는 단점이 있는데 만약 수정하고자 하면 새로운 객체를 만들어 내는 메서드를 가져야 함
 
-```
+```kotlin
 class User(
     val name: String,
     val surname: String,
@@ -323,7 +323,7 @@ print(user)
 
 - 다만 모든 프로퍼티를 대상으로 이런 함수를 하나하나 만드는 것은 굉장히 귀찮은 일이기 때문에 data 한정사를 사용해 copy 메소드를 활용하면 기본 생성자 프로퍼티가 같은 새로은 객체를 만들어낼 수 있음
 
-```
+```kotlin
 data class(
     val name: String,
     val surname: String,
@@ -339,7 +339,7 @@ print(user)
 
 - 변경할 수 있는 리스트는 아래 두 가지 방식으로 만들 수 있음
 
-```
+```kotlin
 val list1: MutableList<Int> = mutableListOf()
 var list2: List<Int> = listOf()
 
@@ -387,7 +387,7 @@ list2 += 1 // list2 = list2.plus(1)
   - mutable 컬렉션과 mutable 프로퍼티 동시에 사용
     - 프로퍼티, 컬렉션 모두 변경 가능 지점
 
-  ```
+  ```kotlin
   var list3 = mutableListOf<Int>()
   ```
 
@@ -399,7 +399,7 @@ list2 += 1 // list2 = list2.plus(1)
 
 - 상태를 나타내는 mutable 객체를 외부에 노출하는 것은 굉장히 위험
 
-```
+```kotlin
 data class User(
     val name: String
 )
@@ -466,7 +466,7 @@ storedUsers[4] = "Kiraill"
 - 요소의 스코프라는 것은 요소를 볼 수 있는 컴퓨터 프로그램 영역
   - 코틀린의 스코프는 기본적으로 중괄호로 만들어지며, 내부 스코프에서 외부 스코프에 있는 요소에만 접근할 수 있음
 
-```
+```kotlin
 val a = 1
 fun fizz() {
     val b = 2
@@ -481,7 +481,7 @@ val buzz = {
 
 변수 스코프를 제한하는 예
 
-```
+```kotlin
 val users = listOf<User>()
 var user: User
 
@@ -507,7 +507,7 @@ for ((i, user) in users.withIndex()){
 - 추가로 변수 정의시에도 초기화하는 것이 좋은데 코틀린은 if, when, try-catch, Elvis 표현식 등을 활용하면 최대한 변수를 정의할때 초기할 수 있음
 - 여러 프로퍼티를 한꺼번에 설정해야 하는 경우, 구조분해 선언(destructuring declaration), 구조분해 할당
 
-```
+```kotlin
 // bad
 val user: User
 
@@ -570,7 +570,7 @@ fun updateWeather(degrees: Int) {
 
 구현 예
 
-```
+```kotlin
 var numbers = (2..100).toList()
 val primes = mutableListOf<Int>()
 
@@ -584,7 +584,7 @@ println(primes)
 
 시퀀스를 활용한 구현 예
 
-```
+```kotlin
 val primes: Sequence<Int> = sequence {
     var numbers = generateSequence(2) { it + 1 }
 
@@ -602,7 +602,7 @@ println(primes.take(10).toList()) // [2, 3, 5, 7. 11, 13, 17, 19, 23, 29]
 
 **잘못 활용한 예**
 
-```
+```kotlin
 val primes: Sequence<Int> = sequence {
     var numbers = generateSequence(2) { it + 1 }
     var prime: Int
@@ -672,7 +672,7 @@ println(primes.take(10).toList()) // [2, 3, 5, 6, 7, 8, 9, 10, 11, 12]
 - 코틀린은 null-safety 매커니즘으로 인해 NPE를 거의 찾아보기 힘듬
 - null-safety 매커니즘이 없는 자바, C 등의 프로그래밍 언어와 코틀린을 연결해서 사용할 때는 NPE 예외가 발생할 수 있음
 
-```
+```kotlin
 public class JavaTest{ 
     public String giveName() { ... }
 }
@@ -684,7 +684,7 @@ public class JavaTest{
 
 **제네릭 타입**
 
-```
+```kotlin
 public class UserRepo {
     public List<User> getUsers() { ...}
 }
@@ -696,7 +696,7 @@ val users: List<User> = UserRepo().users!!.filterNotNull()
 - 그래서 코틀린은 자바 등의 다른 프로그래밍 언어에서 넘어온 타입들을 특수하게 다루고 이러한 타입을 플랫폼 타입이라고 부름
   - 플랫폼 타입 : 다른 프로그래밍 언어에서 전달되어서 nullable인지 아닌지 알 수 없는 타입
 
-```
+```kotlin
 val repo = UserRepo()
 val user1 = repo.user // user1의 타입 User!
 val user2: User = repo.user // User
@@ -727,7 +727,7 @@ val users: List<List<User>> = UserRepo().groupedUsers
 
 **플랫폼 타입 사용의 문제점**
 
-```
+```kotlin
 public class JavaClass {
     public String getValue() {
         return null;
@@ -752,7 +752,7 @@ fun platformType() {
   - **platformType**은 값을 활용할때 NPE 발생
     - 플랫폼 타입으로 지정된 변수는 nullable일 수도 있고, 아닐 수도 있어서 실제로 활용하는 라인에서 발생
 
-```
+```kotlin
 interface UserRepo {
     fun getUserName() = JavaClass().value
 }
