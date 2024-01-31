@@ -426,6 +426,7 @@ class Failure(val throwable: Throwable) : Result<Nothing>()
 - !!문은 nullability가 제대로 표현되지 않는 라이브러리를 사용할 때 정도에만 사용해야함
 - 미래에 코드가 어떻게 변화할지 모르니 현재 null이 아니라고 !!문을 쓰지 않는게 좋음
 - !! 연산자 사용은 최대한 피하자
+- 테스트 코드에서는 사용하는 것은 어떨까? (본인의 경우 테스트 코드에서는 자주 사용)
 
 **의심 없는 nullability 피하기**
 - nullability를 안전하게 처리할 수 있는 함수 사용
