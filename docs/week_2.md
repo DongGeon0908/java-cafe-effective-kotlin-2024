@@ -1,5 +1,8 @@
 # Week 2
 
+<br>
+<br>
+
 ### 목차
 
 - 아이템 4: inferred 타입으로 리턴하지 말라
@@ -8,6 +11,9 @@
 - 아이템 7: 결과 부족이 발생할 경우 null과 Failure를 사용하라
 - 아이템 8: 적절하게 null을 처리하라
 - 아이템 9: use를 사용하여 리소스를 닫아라
+
+<br>
+<br>
 
 ### 아이템 4: inferred 타입으로 리턴하지 말라
 
@@ -59,6 +65,8 @@ interface CarFactory {
 - 안전을 위해 외부 API를 만들 때는 반드시 타입을 지정하고 이렇게 지정한 타입을 특별한 이유와 확실한 확인 없이 제거하지 않는 것이 좋음
 - inferred 타입은 프로젝트가 진전될 때, 제헌이 너무 많아지거나 예측하지 못하는 결과를 낼 수 있음
 
+<br>
+<br>
 
 ### 아이템 5: 예외를 활용해 코드에 제한을 걸어라
 
@@ -332,6 +340,9 @@ fun sendEmail(person: Person, text: String) {
 - assert 블록 : 테스트 모드에서 테스트할 때 사용하는 범용적인 방법
 - return과 throw 와 함께 Elvis 연산자 사용
 
+<br>
+<br>
+
 ### 아이템 6: 사용자 정의 오류보다는 표준 오류를 사용하라
 
 - require, check, assert 함수를 사용한다면, 대부분의 코틀린 오류를 처리할 수 있음
@@ -359,6 +370,8 @@ inline fun <reified T> String.readObject(): T {
 - UnsupportedOperationException
 - NoSuchElementException
 
+<br>
+<br>
 
 ### 아이템 7: 결과 부족이 발생할 경우 null과 Failure를 사용하라
 
@@ -402,6 +415,8 @@ class Failure(val throwable: Throwable) : Result<Nothing>()
 - 함수를 만들 때, exception 대신, nullable 혹은 Fail 객체로 wrap
 - runCatching에서도 해당 방식 사용함
 
+<br>
+<br>
 
 ### 아이템 8: 적절하게 null을 처리하라
 
@@ -462,6 +477,9 @@ private class NotNullVar<T : Any>() : ReadWriteProperty<Any?, T> {
 ```
 
 - notNull을 위임하면 get에서 널 검사를 진행한다.
+
+<br>
+<br>
 
 ### 아이템 9: use를 사용하여 리소스를 닫아라
 
