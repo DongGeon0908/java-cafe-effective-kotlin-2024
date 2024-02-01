@@ -22,6 +22,8 @@ inferred type : 변수나 표현식의 타입을 컴파일러가 자동으로 �
 - 코틀린 타입 추론을 사용할 때는 몇 가지 위험한 부분이 있는데, 이러한 위험한 부분을 피하려면 할당 시에 inferred 타입은 정확하게 오른쪽에 있는 피연산에 맞게 설정해야함
 - 절대 수퍼 클래스 또는 인터페이스로는 설정되지 않음
 
+<br>
+
 **문제가 발생**
 ```kotlin
 open class Animal
@@ -33,6 +35,7 @@ fun main() {
 }
 ```
 
+<br>
 
 **명시적으로 지정**
 ```kotlin
@@ -60,6 +63,8 @@ interface CarFactory {
 - 그러나 이후 다른 사람이 코드를 보다가 DEFAULT_CAR 는 타입 추론에 의해 자동으로 타입이 지정될 것이므로 명시적으로 지정한 코드를 제거 하게 된다면 CarFactory는 Flat126P 이외의 자동차를 생산할 수 없게 됨
 - 만약 인터페이스를 우리가 직접 만들었다면 문제를 쉽게 찾을 수 있지만 외부 API라면 쉽게 해결할 수 없기 때문에 리턴 타입을 명시적으로 지정해주는게 좋음
 
+<br>
+
 **정리**
 - 타입을 확실하게 지정해야 하는 경우에는 명시적으로 타입을 지정
 - 안전을 위해 외부 API를 만들 때는 반드시 타입을 지정하고 이렇게 지정한 타입을 특별한 이유와 확실한 확인 없이 제거하지 않는 것이 좋음
@@ -72,13 +77,15 @@ interface CarFactory {
 
 - 확실하게 어떤 형태로 동작해야 하는 코드가 있다면 예외를 활용해 제한을 걸어주는 것이 좋은데 코틀린에서는 코드의 동작에 제한을 걸 때 다음과 같은 방법을 사용할 수 있음
 
+<br>
 
 - require 블록 : 아규먼트 제한
 - check 블록 : 상태와 관련된 동작 제한
 - assert 블록 : 어떤 것이 true인지 확인 가능 그러나 테스트 모드에서만 동작
 - return 도는 throw와 함께 활용하는 Elvis 연산자
 
-관련 code
+<br>
+
 ```kotlin
 /*
  * Copyright 2010-2018 JetBrains s.r.o. and Kotlin Programming Language contributors.
@@ -225,6 +232,7 @@ public inline fun <T : Any> checkNotNull(value: T?, lazyMessage: () -> Any): T {
 public inline fun error(message: Any): Nothing = throw IllegalStateException(message.toString())
 ```
 
+<br>
 
 ```kotlin
 class Stack<T>(
@@ -252,6 +260,8 @@ class Stack<T>(
 - 예상하지 못한 동작을 하는 것보단 throw 하는 것이 훨씬 안정적이고 관리하기 좋음
 - 코드가 어느 정도 자체적으로 검사가 됨
 - 스마트 캐스트 기능을 활용할 수 있게 되므로, 캐스트를 적게할 수 있음
+
+<br>
 
 **아규먼트**
 - 함수 정의할 때 타입 시스템을 활용해서 아규먼트에 제한을 거는 코드를 많이 사용
@@ -283,6 +293,8 @@ fun isValildEmail(email: String): Boolean {
 - require 함수는 조건을 만족시키지 못할 때 무조건적으로 IllegalArgumentException 을 발생시키므로 제한을 무시할 수 없음
 - 추가로 람다를 활용해 메시지 정의할 수 있음
 
+<br>
+
 **상태**
 - 어떤 구체적인 조건을 만족할 때만 함수를 사용할 수 있게 해야할 때가 있는데 이런 경우 check 함수를 통해 상태에 제한을 검
 
@@ -296,6 +308,8 @@ fun speak(text: String) {
 - check 함수는 require과 비슷하지만 지정된 예측을 만족하지 못할 때 IllegalStateException 을 throw함
 - 일반적으로 함수 전체에 대한 어떤 에측이 있을대는 require 블록 뒤에 배치
 
+<br>
+
 **Assert 계열 함수 사용**
 ```kotlin
 fun pop(num: Int = 1): List<T> {
@@ -308,6 +322,8 @@ fun pop(num: Int = 1): List<T> {
 - 특정 상황이 아닌 모든 상황에 대한 테스트 할 수 있음
 - 실행 시점에 정확하게 어떻게 되는지 확인할 수 있음
 - 코틀린/jvm에서만 활성화되며, -ea JVM 옵션을 활성해야 확인 가능
+
+<br>
   
 **nullability와 스마트 캐스팅**
 
@@ -327,6 +343,8 @@ fun sendEmail(person: Person, text: String) {
     val email: String = person.email ?: return
 }
 ```
+
+<br>
 
 **정리**
 - 코틀린에서 코드에 제한을 걸때의 장점
@@ -362,6 +380,8 @@ inline fun <reified T> String.readObject(): T {
 - 위와 같이 표준 라이브러리에서 나타내는 적절한 오류가 없는 경우 사용자 정의 오류를 사용하는 경우도 있지만 가급적 직접 오류를 정의하기보단 표준 라이브러리의 오류를 사용하는 것이 좋음
 - 잘만들어진 규약을 재사용하면 다른 사람들이 API를 더 쉽게 배우고 이해할 수 잇음
 
+<br>
+
 **일반적으로 사용되는 예외**
 
 - IllegalArgumentException, IllegalStateException
@@ -380,6 +400,8 @@ inline fun <reified T> String.readObject(): T {
 - 조건에 맞는 첫 번째 요소를 찾으려 했는데, 조건에 맞는 요소가 없는 경우
 - 텍스트를 파싱해서 객체를 만들려고 했는데, 텍스트의 형식이 맞지 않는 경우
 - null or throw를 발생한다. 정보를 전달해야하는 상황에는 throw를 리턴하고, 추가 정보를 리턴해야하는 경우에는 sealed. 클래스를 사용한다.
+
+<br>
 
 **정보를 전달해야 하는 경우 예외를 사용하면 안되는 이유**
 - 전파되는 과정 추적이 어려움
@@ -410,6 +432,8 @@ class Failure(val throwable: Throwable) : Result<Nothing>()
 만약 null을 리턴하더라도 Elvis 연산자를 활용해 널 안정성 기능을 활용하여 처리가능
 → null과 sealed의 차이는 추가정보 전달 필요여부로 정한다.
 
+<br>
+
 **본인 생각 정리**
 
 - 함수를 만들 때, exception 대신, nullable 혹은 Fail 객체로 wrap
@@ -431,11 +455,13 @@ class Failure(val throwable: Throwable) : Result<Nothing>()
   printer?.name ?: return
   printer?.name ?: throw Error("error")
 ```
+<br>
 
 **프로그래밍 기법**
 - 방어적 프로그래밍 : 모든 가능성을 올바른 방식으로 처리
 - 공격적 프로그래밍 : 예상하지 못한 상황이 발생했을 때, 이러한 문제를 개발자에게 알려서 수정하게 만듬
 
+<br>
 
 **Not-null assertion(!!)과 관련된 문제**
 - !!문은 nullability가 제대로 표현되지 않는 라이브러리를 사용할 때 정도에만 사용해야함
@@ -443,12 +469,16 @@ class Failure(val throwable: Throwable) : Result<Nothing>()
 - !! 연산자 사용은 최대한 피하자
 - 테스트 코드에서는 사용하는 것은 어떨까? (본인의 경우 테스트 코드에서는 자주 사용)
 
+<br>
+
 **의심 없는 nullability 피하기**
 - nullability를 안전하게 처리할 수 있는 함수 사용
 - List getOrNull
 - 어떤 값이 클래스 생성 이후 확실하게 설정된다는 보장이 있으면 lateinit 프로퍼티와 notqnull 델리게이트를 사용
 - 빈 컬렉션 대신 null을 리턴하지 마세요
 - nullable enum vs none enum -> none enum 정의되지 않았기 때문에, 사용하는 측에서 변경 가능, nullable enum 정말 값 없음
+
+<br>
 
 **lateinit 프로퍼티와 notNull 델리게이트**
 - lateinit 한정자는 프로퍼티가 이후에 설정될 것임을 명시하는 한정자
@@ -476,6 +506,8 @@ private class NotNullVar<T : Any>() : ReadWriteProperty<Any?, T> {
 }
 ```
 
+<br>
+
 - notNull을 위임하면 get에서 널 검사를 진행한다.
 
 <br>
@@ -486,9 +518,13 @@ private class NotNullVar<T : Any>() : ReadWriteProperty<Any?, T> {
 **Closeable 인터페이스를 구한혀는 리소스는 레퍼런스가 없어질 때 가비지 컬렉터가 처리한다.**
   - 자동 처리는 느리며 쉽게 처리되지 않아 close를 명시적으로 호출해주는 것이 좋다
 
+<br>
+
 **java의 try with resource 같은 키워드가 없으므로 try finally로 처리가능하다**
   - try finally로 처리할 시 try 예외 발생 후 finally 구문에서 예외가 발생하면 둘 중 하나의 예외만 전파된다
   - close 예외가 발생할 경우를 대비해 예외처리를 해주어야 한다.
+
+<br>
 
 **kotlin은 위 불편을 해소하기 위해 use 함수를 제공한다**
 - 코틀린의 확장함수로 제공
@@ -522,6 +558,8 @@ public inline fun <T : Closeable?, R> T.use(block: (T) -> R): R {
 }
 ```
 
+<br>
+
 - 파일을 한줄씩 처리할 때 활용할 수 있는 useLines도 제공한다
 - 메모리에 한줄씩만 유지된다
 ```kotlin
@@ -533,6 +571,8 @@ public inline fun <T : Closeable?, R> T.use(block: (T) -> R): R {
 public inline fun <T> Reader.useLines(block: (Sequence<String>) -> T): T =
     buffered().use { block(it.lineSequence()) }
 ```
+
+<br>
 
 **생각정리**
 - Closeable과 같이 다른 동작이 가능하도록 기능을 제공하는 extension을 잘 활용해라! 라는게 이번장의 핵심인 것인가?
