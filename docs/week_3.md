@@ -36,6 +36,7 @@ person?.takeIf { it.isAdult }
             ?.let(view::showPerson)
             ?: view.showError()
 ```
+(실제로 2번째 경우를 자주 쓰긴 하는데...궁금합니다..)
 
 - 일반적인 관용구 사용은 이해하기 쉽다
 - 코틀린에서 자주 사용되는 관용구 takeIf,let,엘비스 연산자는 코틀린 개발자는 익숙하지만, 숙련된 개발자만을 위한 코드는 좋은 코드가 아니다
