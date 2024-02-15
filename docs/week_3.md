@@ -136,7 +136,6 @@ every { service.get() } returns 5 // infix 함수 호출 방법
 ```
 
 **예제**
-- 이번에는 infix function을 만드는 방법에 대해서 알아보도록 하겠습니다. 먼저 커스텀하게 만들기 전에 코틀린에서는 기본적으로 사용할 수 있는 infix function을 살펴보도록 하겠습니다.
 
 ```kotlin
 val pairs = mapOf(
