@@ -9,7 +9,7 @@
 
 <hr>
 
-#### 아이템 23: 타입 파라미터의 섀도잉을 피하라 
+### 아이템 23: 타입 파라미터의 섀도잉을 피하라 
 
 ```kotlin
     class Forest(val name: String){
@@ -61,7 +61,7 @@
 **새도잉을 피하자**
 - 다른 명칭으로 진행한다.
 
-#### 아이템 24: 제네렉 타입과 variance 한정자를 활용하라
+### 아이템 24: 제네렉 타입과 variance 한정자를 활용하라
 
 ```kotlin
 class Box<T>
@@ -105,7 +105,7 @@ fun main(args: Array<String>) {
 
 <br>
 
-#### 함수 타입
+**함수 타입**
 
 - 함수 타입은 파라미터 유형과 리턴 타입에 따라서 관계가 달라진다.
 
@@ -150,7 +150,7 @@ object[2] = "B"; // Runtime에 ArrayStoreException이 발생
 
 <br>
 
-#### variance(out or in) 한정자 사용시 주의사항
+**variance(out or in) 한정자 사용시 주의사항**
 
 - effective java를 보면 PECS (producer extends consumer super) 공식을 볼 수 있다. 이는 generic이 존재하는 언어에 모두 적용할 수 있다.
 
@@ -230,7 +230,7 @@ class Box<in T>
 
 <br>
 
-#### variance 한정자의 위치
+**variance 한정자의 위치**
 
 - 선언 부분에 사용
 
@@ -260,13 +260,13 @@ val box2: Box<out Any> = box1
 
 ### 아이템 26: 함수 내부의 추상화 레벨을 통일하라
 
-## 추상화 레벨
+**추상화 레벨**
 
 - 추상화 레벨은 구체적인 동작, 프로세서, 입출력과 가까울수록 낮은 레벨이라고 한다.
 - 높은 레벨일수록 걱정해야 하는 세부 내용은 적어지지만, 제어력(control)을 잃는다.
   - ex) 자바는 가비지 컬렉터가 자동으로 메모리 관리를 해주므로 메모리 사용을 최적화하기 어렵다.
 
-## 추상화 레벨 통일
+**추상화 레벨 통일**
 
 - 코드도 추상화를 계층처럼 만들어서 사용할 수 있다.
 - 그 도구가 바로 `함수`이고, 함수도 높은 레벨과 낮은 레벨을 구분해서 사용해야 한다 = `추상화 레벨 통일(Single Level of Abstraction, SLA)` 
